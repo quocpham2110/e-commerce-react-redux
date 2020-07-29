@@ -17,10 +17,8 @@ export const { getProductsCart } = productsCartSlice.actions;
 export const fetchProductsCart = () => async (dispatch) => {
   let url = "http://localhost:3000/products?";
   const storage = JSON.parse(localStorage.getItem("cart"));
-  console.log(storage);
   if (storage === null) return dispatch(getProductsCart([]));
   else storage.forEach((el) => (url += `id=${el.id}&`));
-  console.log("url: ", url);
   await fetch(url)
     .then((res) => res.json())
     .then((data) => {

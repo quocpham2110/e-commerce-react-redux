@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { addItem } from "../redux/reducer/cartSlice";
+import { addItem } from "../redux/reducer/storageItem";
 import {
   selectProductsList,
   fetchProductsList,
 } from "../redux/reducer/productsList";
 import { fetchProductsCart } from "../redux/reducer/productsCart";
+import { checkCartStatus } from "../redux/reducer/cartStatus";
 
 const Products = (props) => {
   const productsList = useSelector(selectProductsList);
@@ -38,7 +39,7 @@ const Products = (props) => {
     if (select === "fea") {
       setProducts(productsList);
     }
-  }, [select, products, productsList]);
+  }, [select, productsList]);
 
   // Handle selecting sort way
   const handleSelect = (e) => {
@@ -66,11 +67,13 @@ const Products = (props) => {
 
 const Product = (props) => {
   const url = "";
+
   const dispatch = useDispatch();
   const handleProduct = (e) => {
     e.preventDefault();
     dispatch(addItem(props.item.id));
     dispatch(fetchProductsCart());
+    dispatch(checkCartStatus());
   };
   return (
     <aside className="products__item">

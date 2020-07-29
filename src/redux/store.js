@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./reducer/cartSlice";
+import storageItemReducer from "./reducer/storageItem";
 import productsListReducer from "./reducer/productsList";
 import productsCartReducer from "./reducer/productsCart";
+import cartStatusReducer from "./reducer/cartStatus";
 
 export default configureStore({
   reducer: {
-    cart: cartReducer,
+    storageItem: storageItemReducer,
     productsList: productsListReducer,
     productsCart: productsCartReducer,
+    cartStatus: cartStatusReducer,
   },
 });

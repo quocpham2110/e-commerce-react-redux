@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const cartSlice = createSlice({
-  name: "cart",
+const storageItemSlice = createSlice({
+  name: "storageItem",
   initialState: {
     value: JSON.parse(localStorage.getItem("cart")),
   },
@@ -48,7 +48,7 @@ const cartSlice = createSlice({
     },
   },
 });
-export const { deleteItem, checkOut, addItem } = cartSlice.actions;
-export const selectCart = (state) => state.cart.value;
+export const { deleteItem, checkOut, addItem } = storageItemSlice.actions;
+export const selectstorageItem = (state) => state.storageItem.value;
 
-export default cartSlice.reducer;
+export default storageItemSlice.reducer;

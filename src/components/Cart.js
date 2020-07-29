@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteItem, checkOut } from "../redux/reducer/cartSlice";
+import { deleteItem, checkOut } from "../redux/reducer/storageItem";
 import {
   selectProductsCart,
   fetchProductsCart,
 } from "../redux/reducer/productsCart";
+import { selectCartStatus, checkCartStatus } from "../redux/reducer/cartStatus";
 
 const Cart = (props) => {
   const url = "";
@@ -47,6 +48,7 @@ const Cart = (props) => {
     document.body.scrollIntoView({ behavior: "smooth" });
     dispatch(checkOut());
     dispatch(fetchProductsCart());
+    dispatch(checkCartStatus());
   };
 
   return (
@@ -69,7 +71,6 @@ const Cart = (props) => {
             <div className="cart__item-header">Qty</div>
             <div className="cart__item-header">SubTotal</div>
           </div>
-          {console.log(productsCart)}
           {productsCart.length === 0 ? (
             <span> There are no items added to Cart!</span>
           ) : (
@@ -97,6 +98,7 @@ const CartItem = (props) => {
     e.preventDefault();
     dispatch(deleteItem(props.item.id));
     dispatch(fetchProductsCart());
+    dispatch(checkCartStatus());
   };
 
   return (
@@ -117,18 +119,22 @@ const CartItem = (props) => {
 };
 
 export const CartBtn = (props) => {
-  const cartStatusEle = useRef();
   const url = "";
+  const cartStatusEle = useRef();
+  const cartStatus = useSelector(selectCartStatus);
+
   const openCart = (e) => {
     e.preventDefault();
     document.body.scrollIntoView({ behavior: "smooth" });
     props.openCart();
   };
+
   useEffect(() => {
-    Boolean(props.cartStatus)
+    cartStatus
       ? cartStatusEle.current.classList.remove("noItem")
       : cartStatusEle.current.classList.add("noItem");
-  }, [props.cartStatus]);
+  }, [cartStatus]);
+
   return (
     <a href={url} onClick={openCart} className="cart__icon">
       <i className="fas fa-shopping-cart hover"></i>

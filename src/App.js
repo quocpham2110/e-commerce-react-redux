@@ -9,7 +9,6 @@ import Cart from "./components/Cart";
 
 const App = () => {
   const [type, setType] = useState([]);
-  const [cartStatus, setCartStatus] = useState(0);
   const [openCartState, setOpenCartState] = useState(false);
 
   // Define category of Sidebar
@@ -34,13 +33,12 @@ const App = () => {
 
   return (
     <div className="app">
-      <Header cartStatus={cartStatus} openCart={openCart} />
+      <Header openCart={openCart} />
       <Sidebar type={type} />
       <Products />
       <Cart
         openCartState={openCartState}
         closeCart={closeCart}
-        cartStatus={cartStatus}
       />
     </div>
   );

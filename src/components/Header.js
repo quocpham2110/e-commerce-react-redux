@@ -3,6 +3,11 @@ import { CartBtn } from "./Cart";
 
 const Header = (props) => {
   const url = "";
+
+  const handleSearchBtn = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <header className="header">
       <div className="header__wrapper">
@@ -19,13 +24,13 @@ const Header = (props) => {
               placeholder="Search a product"
               onChange={props.handleSearchInput}
             />
-            <a className="btn hover" href={url} onClick={props.handleSearchBtn}>
+            <a className="btn hover" href={url} onClick={handleSearchBtn}>
               <i className="fa fa-search"></i>
             </a>
           </div>
         </div>
         <div className="header__right">
-          <CartBtn cartStatus={props.cartStatus} openCart={props.openCart} />
+          <CartBtn openCart={props.openCart} />
         </div>
       </div>
     </header>
