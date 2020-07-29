@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import "./css/reset.css";
+import "./css/style.css";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import Products from "./components/Products";
+import Cart from "./components/Cart";
 
-function App() {
+const App = () => {
+  const [type, setType] = useState([]);
+  const [cartStatus, setCartStatus] = useState(0);
+  const [openCartState, setOpenCartState] = useState(false);
+
+  // Define category of Sidebar
+  useEffect(() => {
+    fetch("http://localhost:3000/products")
+      .then((res) => res.json())
+      .then((data) => {
+        const typeSetObj = new Set();
+        data.map((el) => typeSetObj.add(el.type));
+        setType([...typeSetObj]);
+      });
+  }, []);
+
+  // Set status of cart => close cart
+  const openCart = () => {
+    setOpenCartState(true);
+  };
+  // Set status of cart => close cart
+  const closeCart = () => {
+    setOpenCartState(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header cartStatus={cartStatus} openCart={openCart} />
+      <Sidebar type={type} />
+      <Products />
+      <Cart
+        openCartState={openCartState}
+        closeCart={closeCart}
+        cartStatus={cartStatus}
+      />
     </div>
   );
-}
+};
 
 export default App;
